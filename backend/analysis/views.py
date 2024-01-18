@@ -10,12 +10,12 @@ from openai import OpenAI
 from backend.my_settings import openai_secret_key
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from analysis.models import TemporaryPrompt
+# from analysis.models import TemporaryPrompt
 from django.core.cache import cache
 
 
 # Create your views here.
-
+# 오류
 class Rating(APIView):
 
     @swagger_auto_schema(
@@ -51,7 +51,7 @@ class Rating(APIView):
             
             avg_parent_rating = avg_parent_rating//cnt
 
-            message = {
+            messages = {
                 "message": "평가 조회 성공",
                 "result": {
                     "student_rating": student_ratings,
@@ -60,12 +60,12 @@ class Rating(APIView):
                 }
             }
 
-            return Response(message, status.HTTP_200_OK)
+            return Response(messages, status.HTTP_200_OK)
         except:
-            message = {
+            messages = {
                 "message": "평가 조회 실패"
             }
-            return Response(message, status.HTTP_400_BAD_REQUEST)
+            return Response(messages, status.HTTP_400_BAD_REQUEST)
 # 하나로
 
 # class Score(APIView):
@@ -79,6 +79,7 @@ class Rating(APIView):
     
 # student/ ScoreGetPostAPIView
 
+# 오류
 class Prompt(APIView):
 
     @swagger_auto_schema(
@@ -93,10 +94,10 @@ class Prompt(APIView):
 
         try: 
             prompt = cache.get(student_id)
-            message = {
+            messages = {
                 "response": prompt
             }
-            return Response(message, status.HTTP_200_OK)
+            return Response(messages, status.HTTP_200_OK)
         
         
 
@@ -128,11 +129,11 @@ class Prompt(APIView):
             )
             response = response.choices[0].message.content
 
-            message = {
+            messages = {
                 "response": response
             }
             
-            return Response(message, status.HTTP_200_OK) 
+            return Response(messages, status.HTTP_200_OK) 
 
 
     
